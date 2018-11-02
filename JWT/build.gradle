@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+	id 'eclipse'
+    id 'application'
+}
+
+mainClassName = 'App'
+
+dependencies {
+    compile 'com.google.guava:guava:23.0'
+    testCompile 'junit:junit:4.12'
+    
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+}
+
+repositories {
+    jcenter()
+}
