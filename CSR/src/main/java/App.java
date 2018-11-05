@@ -3,6 +3,7 @@ import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.asn1.x509.ExtensionsGenerator;
 import org.bouncycastle.asn1.x509.KeyUsage;
+import org.bouncycastle.asn1.x509.SubjectKeyIdentifier;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
@@ -31,8 +32,8 @@ public class App {
         KeyUsage usage = new KeyUsage(KeyUsage.digitalSignature | KeyUsage.keyEncipherment | KeyUsage.keyAgreement);
         ExtensionsGenerator exgen = new ExtensionsGenerator();
         exgen.addExtension(Extension.keyUsage, true, usage);
+        exgen.addExtension(Extension.subjectKeyIdentifier, true, new SubjectKeyIdentifier(keyPair.getPublic().getEncoded()));
         p10Builder.addAttribute(PKCSObjectIdentifiers.pkcs_9_at_extensionRequest, exgen.generate());
-
         PKCS10CertificationRequest csr = p10Builder.build(signer);
         System.out.println(new String(Base64.getEncoder().encodeToString(csr.getEncoded())));
     }
